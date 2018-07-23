@@ -6,13 +6,18 @@
     android:background="@drawable/login"
     android:gravity="center_horizontal"
     android:orientation="vertical"
-    android:weightSum="3"
+    android:weightSum="20"
     tools:context=".LoginActivity">
-    
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"
+        android:layout_weight="4"></LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="6"
         android:gravity="center"
         android:orientation="vertical">
 
@@ -27,40 +32,49 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="2"
+        android:layout_weight="10"
         android:gravity="center"
         android:orientation="vertical">
 
         <EditText
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="45dp"
             android:inputType="textPersonName"
-            android:ems="10"
+            android:background="#FFFFFF"
+            android:alpha="0.3"
+            android:ems="12"
             android:id="@+id/idText"
             android:hint="아이디"/>
 
         <EditText
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="45dp"
             android:inputType="textPassword"
-            android:ems="10"
+            android:background="#FFFFFF"
+            android:alpha="0.3"
+            android:ems="12"
+            android:layout_marginTop="2dp"
             android:id="@+id/passwordText"
             android:hint="비밀번호"/>
 
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:ems="14"
+            android:ems="8"
             android:id="@+id/loginBtn"
+            android:background="#CDCDCD"
+            android:textSize="13pt"
+            android:layout_marginTop="20dp"
             android:text="로그인"/>
 
         <TextView
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:ems="14"
+            android:layout_height="45dp"
+            android:ems="8"
             android:id="@+id/registerBtn"
             android:gravity="center"
-            android:textSize="10pt"
+            android:textSize="13pt"
+            android:background="@drawable/xml_border"
             android:layout_marginTop="20dp"
             android:text="회원가입"
             android:textAppearance="@style/TextAppearance.AppCompat.Button"/>
