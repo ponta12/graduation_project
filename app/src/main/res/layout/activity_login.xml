@@ -44,7 +44,8 @@
             android:alpha="0.3"
             android:ems="12"
             android:id="@+id/idText"
-            android:hint="아이디"/>
+            android:hint="    아이디"
+            android:textColorHint="@color/colorBlack"/>
 
         <EditText
             android:layout_width="wrap_content"
@@ -55,7 +56,8 @@
             android:ems="12"
             android:layout_marginTop="2dp"
             android:id="@+id/passwordText"
-            android:hint="비밀번호"/>
+            android:hint="    비밀번호"
+            android:textColorHint="@color/colorBlack"/>
 
         <Button
             android:layout_width="wrap_content"
