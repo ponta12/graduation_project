@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/main"
-    android:weightSum="12">
+    tools:context=".RegisterActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -35,8 +36,9 @@
             android:background="#CDCDCD"
             android:alpha="0.3"
             android:ems="12"
-            android:id="@+id/idText"
+            android:id="@+id/ridText"
             android:hint="아이디(2~20자 이내)"
+            android:paddingLeft="5pt"
             android:textColorHint="#000000"/>
 
         <EditText
@@ -46,8 +48,9 @@
             android:background="#CDCDCD"
             android:alpha="0.3"
             android:ems="12"
-            android:id="@+id/passwordText"
+            android:id="@+id/rpasswordText"
             android:hint="비밀번호(5~20자 이내)"
+            android:paddingLeft="5pt"
             android:textColorHint="#000000"
             android:layout_marginTop="2dp"/>
 
@@ -60,6 +63,7 @@
             android:ems="12"
             android:id="@+id/passwordConfirm"
             android:hint="비밀번호 확인"
+            android:paddingLeft="5pt"
             android:textColorHint="#000000"
             android:layout_marginTop="2dp"/>
 
@@ -72,18 +76,20 @@
             android:ems="12"
             android:id="@+id/name"
             android:hint="이름"
+            android:paddingLeft="5pt"
             android:textColorHint="#000000"
             android:layout_marginTop="2dp"/>
 
         <EditText
             android:layout_width="wrap_content"
             android:layout_height="45dp"
-            android:inputType="textPhonetic"
+            android:inputType="phone"
             android:background="#CDCDCD"
             android:alpha="0.3"
             android:ems="12"
             android:id="@+id/phone"
             android:hint="전화번호"
+            android:paddingLeft="5pt"
             android:textColorHint="#000000"
             android:layout_marginTop="2dp"/>
 
@@ -91,8 +97,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:ems="8"
-            android:id="@+id/loginBtn"
-            android:background="#0BC2FC"
+            android:id="@+id/confirmBtn"
+            android:background="@drawable/selector_button"
+            android:textColor="@drawable/selector_text"
             android:textSize="13pt"
             android:layout_marginTop="20dp"
             android:text="확인"/>
@@ -101,7 +108,7 @@
             android:layout_width="wrap_content"
             android:layout_height="45dp"
             android:ems="8"
-            android:id="@+id/registerBtn"
+            android:id="@+id/cancelBtn"
             android:gravity="center"
             android:textSize="13pt"
             android:background="@drawable/xml_border"

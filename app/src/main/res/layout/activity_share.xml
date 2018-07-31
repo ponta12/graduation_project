@@ -17,7 +17,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="슝슝이"
+            android:text="공유"
             android:textSize="15pt"
             android:textColor="#FFFFFF"/>
 
@@ -48,29 +48,13 @@
             android:layout_weight="1">
 
             <Button
-                android:id="@+id/homebtn1"
+                android:id="@+id/homebtn2"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_gravity="center_vertical"
                 android:background="@color/colorWhite"
-                android:drawableTop="@drawable/ic_home_seleted"
+                android:drawableTop="@drawable/ic_home"
                 android:text="home"
-                android:textColor="@color/backBlue" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1">
-
-            <Button
-                android:id="@+id/sharebtn1"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_gravity="center_vertical"
-                android:background="@color/colorWhite"
-                android:drawableTop="@drawable/ic_share"
-                android:text="share"
                 android:textColor="@color/lineGray" />
         </LinearLayout>
 
@@ -80,7 +64,23 @@
             android:layout_weight="1">
 
             <Button
-                android:id="@+id/reservebtn1"
+                android:id="@+id/sharebtn2"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_vertical"
+                android:background="@color/colorWhite"
+                android:drawableTop="@drawable/ic_share_selected"
+                android:text="share"
+                android:textColor="@color/backBlue" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+
+            <Button
+                android:id="@+id/reservebtn2"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_gravity="center_vertical"
@@ -96,7 +96,7 @@
             android:layout_weight="1">
 
             <Button
-                android:id="@+id/smartkeybtn1"
+                android:id="@+id/smartkeybtn2"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_gravity="center_vertical"
@@ -112,7 +112,7 @@
             android:layout_weight="1">
 
             <Button
-                android:id="@+id/mypagebtn1"
+                android:id="@+id/mypagebtn2"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_gravity="center_vertical"

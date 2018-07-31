@@ -17,7 +17,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="슝슝이"
+            android:text="스마트키"
             android:textSize="15pt"
             android:textColor="#FFFFFF"/>
 
@@ -48,14 +48,14 @@
             android:layout_weight="1">
 
             <Button
-                android:id="@+id/homebtn1"
+                android:id="@+id/homebtn4"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_gravity="center_vertical"
                 android:background="@color/colorWhite"
-                android:drawableTop="@drawable/ic_home_seleted"
+                android:drawableTop="@drawable/ic_home"
                 android:text="home"
-                android:textColor="@color/backBlue" />
+                android:textColor="@color/lineGray" />
         </LinearLayout>
 
         <LinearLayout
@@ -64,7 +64,7 @@
             android:layout_weight="1">
 
             <Button
-                android:id="@+id/sharebtn1"
+                android:id="@+id/sharebtn4"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_gravity="center_vertical"
@@ -80,7 +80,7 @@
             android:layout_weight="1">
 
             <Button
-                android:id="@+id/reservebtn1"
+                android:id="@+id/reservebtn4"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_gravity="center_vertical"
@@ -96,14 +96,14 @@
             android:layout_weight="1">
 
             <Button
-                android:id="@+id/smartkeybtn1"
+                android:id="@+id/smartkeybtn4"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_gravity="center_vertical"
                 android:background="@color/colorWhite"
-                android:drawableTop="@drawable/ic_smart_key"
+                android:drawableTop="@drawable/ic_smart_key_selected"
                 android:text="smart key"
-                android:textColor="@color/lineGray" />
+                android:textColor="@color/backBlue" />
         </LinearLayout>
 
         <LinearLayout
@@ -112,7 +112,7 @@
             android:layout_weight="1">
 
             <Button
-                android:id="@+id/mypagebtn1"
+                android:id="@+id/mypagebtn4"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_gravity="center_vertical"
