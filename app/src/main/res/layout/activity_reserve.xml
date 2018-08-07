@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@drawable/main"
     android:orientation="vertical"
-    tools:context=".MainActivity">
+    tools:context=".ReserveActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -44,45 +44,90 @@
                 android:id="@+id/startTime"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_toLeftOf="@id/startDate"/>
+                android:textSize="20pt"
+                android:textStyle="bold"
+                android:layout_toLeftOf="@id/startDW"
+                android:textAppearance="@style/TextAppearance.AppCompat.Button"/>
 
-            <TextView
-                android:id="@+id/startDate"
+            <RelativeLayout
+                android:id="@+id/startDW"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_toLeftOf="@id/center"/>
+                android:layout_toLeftOf="@id/center">
 
-            <TextView
+                <TextView
+                    android:id="@+id/startDate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="10pt"
+                    android:layout_centerHorizontal="true"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Button"/>
+
+                <TextView
+                    android:id="@+id/startWeekday"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="10pt"
+                    android:layout_below="@+id/startDate"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Button"/>
+
+            </RelativeLayout>
+
+            <ImageView
                 android:id="@+id/center"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:text="→"/>
+                android:src="@drawable/right_arrow_32"
+                android:layout_margin="10dp"
+                android:layout_centerHorizontal="true"/>
 
             <TextView
                 android:id="@+id/endTime"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_toRightOf="@id/center"/>
+                android:textSize="20pt"
+                android:textStyle="bold"
+                android:layout_toRightOf="@id/center"
+                android:textAppearance="@style/TextAppearance.AppCompat.Button"/>
 
-            <TextView
-                android:id="@+id/endDate"
+            <RelativeLayout
+                android:id="@+id/endDW"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_toRightOf="@id/endTime"/>
+                android:layout_toRightOf="@id/endTime">
+
+                <TextView
+                    android:id="@+id/endDate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="10pt"
+                    android:layout_centerHorizontal="true"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Button"/>
+
+                <TextView
+                    android:id="@+id/endWeekday"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="10pt"
+                    android:layout_below="@id/endDate"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Button"/>
+
+            </RelativeLayout>
+
 
             <View
                 android:id="@+id/centerLine"
                 android:layout_width="match_parent"
                 android:layout_height="2dp"
                 android:background="@color/lineGray"
-                android:layout_below="@id/center"/>
+                android:layout_below="@id/endDW"/>
 
             <TextView
                 android:id="@+id/totalUseTime"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/centerLine"
+                android:textSize="10pt"
                 android:layout_centerHorizontal="true"/>
 
         </RelativeLayout>
