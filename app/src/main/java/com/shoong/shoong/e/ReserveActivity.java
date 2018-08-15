@@ -114,10 +114,20 @@ public class ReserveActivity extends AppCompatActivity implements View.OnClickLi
             case R.id.startDate:
             case R.id.startTime:
             case R.id.startWeekday:
+                Intent stintent = new Intent(ReserveActivity.this, ReserveTimeSetActivity.class);
+                stintent.putExtra("userId", userId);
+                stintent.putExtra("userName", userName);
+                stintent.putExtra("number", 1);
+                startActivity(stintent);
                 break;
             case R.id.endDate:
             case R.id.endTime:
             case R.id.endWeekday:
+                Intent eintent = new Intent(ReserveActivity.this, ReserveTimeSetActivity.class);
+                eintent.putExtra("userId", userId);
+                eintent.putExtra("userName", userName);
+                eintent.putExtra("number", 2);
+                startActivity(eintent);
                 break;
         }
     }
