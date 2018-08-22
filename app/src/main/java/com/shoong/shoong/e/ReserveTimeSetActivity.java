@@ -1,5 +1,7 @@
 package com.shoong.shoong.e;
 
+import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -8,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.TimePicker;
 
 public class ReserveTimeSetActivity extends AppCompatActivity implements View.OnClickListener{
 
@@ -15,30 +18,48 @@ public class ReserveTimeSetActivity extends AppCompatActivity implements View.On
     private final int FRAGMENT2 = 2;
 
     private TextView bt_start, bt_end;
-    Fragment1 fragment1 = new Fragment1();
-    Fragment2 fragment2 = new Fragment2();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_reservetimeset);
 
+        Intent intent = getIntent();
+
         bt_start = (TextView)findViewById(R.id.startBtn);
         bt_end = (TextView)findViewById(R.id.endBtn);
+        int number = intent.getIntExtra("number", 1);
 
         bt_start.setOnClickListener(this);
         bt_end.setOnClickListener(this);
 
-        callFragment(FRAGMENT1);
+        if (number == 1) {
+            bt_start.setTextColor(Color.rgb(255, 255, 255));
+            bt_start.setBackgroundColor(Color.rgb(11, 194, 252));
+            callFragment(FRAGMENT1);
+        }
+        else {
+            bt_end.setTextColor(Color.rgb(255, 255, 255));
+            bt_end.setBackgroundColor(Color.rgb(11, 194, 252));
+            callFragment(FRAGMENT2);
+        }
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.startBtn:
+                bt_start.setTextColor(Color.rgb(255, 255, 255));
+                bt_start.setBackgroundColor(Color.rgb(11, 194, 252));
+                bt_end.setTextColor(Color.BLACK);
+                bt_end.setBackgroundColor(Color.WHITE);
                 callFragment(FRAGMENT1);
                 break;
             case R.id.endBtn:
+                bt_end.setTextColor(Color.rgb(255, 255, 255));
+                bt_end.setBackgroundColor(Color.rgb(11, 194, 252));
+                bt_start.setTextColor(Color.BLACK);
+                bt_start.setBackgroundColor(Color.WHITE);
                 callFragment(FRAGMENT2);
                 break;
         }
@@ -52,12 +73,12 @@ public class ReserveTimeSetActivity extends AppCompatActivity implements View.On
         switch (fragment_no) {
             case FRAGMENT1:
                 // 1번 탭 호출
-                transaction.replace(R.id.fragment_container, fragment1);
+                transaction.replace(R.id.fragment_container, new Fragment1());
                 transaction.commit();
                 break;
             case FRAGMENT2:
                 // 2번 탭 호출
-                transaction.replace(R.id.fragment_container, fragment2);
+                transaction.replace(R.id.fragment_container, new Fragment2());
                 transaction.commit();
                 break;
         }
@@ -71,7 +92,11 @@ public class ReserveTimeSetActivity extends AppCompatActivity implements View.On
 
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-            return inflater.inflate(R.layout.fragment_fragment1, container, false);
+            View view = inflater.inflate(R.layout.fragment_fragment1, container, false);
+            TimePicker timePicker = (TimePicker) view.findViewById(R.id.timePicker1);
+            timePicker.setIs24HourView(true);
+
+            return view;
         }
     }
 
@@ -83,7 +108,13 @@ public class ReserveTimeSetActivity extends AppCompatActivity implements View.On
 
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-            return inflater.inflate(R.layout.fragment_fragment2, container, false);
+            View view = inflater.inflate(R.layout.fragment_fragment2, container, false);
+            TimePicker timePicker = (TimePicker) view.findViewById(R.id.timePicker2);
+            timePicker.setIs24HourView(true);
+
+
+
+            return view;
         }
     }
 }

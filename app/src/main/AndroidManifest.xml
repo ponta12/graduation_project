@@ -27,6 +27,7 @@
         <activity android:name=".MainActivity"/>
         <activity android:name=".LoginActivity"/>
         <activity android:name=".RegisterActivity"/>
+        <activity android:name=".ReserveTimeSetActivity"/>
         <activity android:name=".ShareActivity"/>
         <activity android:name=".IntroActivity"/>
         <activity android:name=".SmartkeyActivity"/>
