@@ -28,6 +28,7 @@ public class ReserveTimeSetActivity extends AppCompatActivity implements View.On
 
         bt_start = (TextView)findViewById(R.id.startBtn);
         bt_end = (TextView)findViewById(R.id.endBtn);
+
         int number = intent.getIntExtra("number", 1);
 
         bt_start.setOnClickListener(this);

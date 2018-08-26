@@ -118,6 +118,15 @@ public class ReserveActivity extends AppCompatActivity implements View.OnClickLi
                 stintent.putExtra("userId", userId);
                 stintent.putExtra("userName", userName);
                 stintent.putExtra("number", 1);
+                //startMonth, startDay, startHour, startMin, endMonth, endDay, endHour, endMin;
+                stintent.putExtra("startMonth", startMonth);
+                stintent.putExtra("startDay", startDay);
+                stintent.putExtra("startHour", startHour);
+                stintent.putExtra("startMin", startMin);
+                stintent.putExtra("endMonth", endMonth);
+                stintent.putExtra("endDay", endDay);
+                stintent.putExtra("endHour", endHour);
+                stintent.putExtra("endMin", endMin);
                 startActivity(stintent);
                 break;
             case R.id.endDate:
@@ -127,6 +136,14 @@ public class ReserveActivity extends AppCompatActivity implements View.OnClickLi
                 eintent.putExtra("userId", userId);
                 eintent.putExtra("userName", userName);
                 eintent.putExtra("number", 2);
+                eintent.putExtra("startMonth", startMonth);
+                eintent.putExtra("startDay", startDay);
+                eintent.putExtra("startHour", startHour);
+                eintent.putExtra("startMin", startMin);
+                eintent.putExtra("endMonth", endMonth);
+                eintent.putExtra("endDay", endDay);
+                eintent.putExtra("endHour", endHour);
+                eintent.putExtra("endMin", endMin);
                 startActivity(eintent);
                 break;
         }
