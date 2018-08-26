@@ -25,7 +25,7 @@ public class ReserveActivity extends AppCompatActivity implements View.OnClickLi
     TextView starttime, startdate, startweekday, endtime, enddate, endweekday, total;
     private String userId, userName;
     private BackPressCloseHandler backPressCloseHandler;
-    int startMonth, startDay, startHour, startMin, endMonth, endDay, endHour, endMin;
+    int startMonth, startDay, startHour, startMin, startwday, endMonth, endDay, endHour, endMin, endwday;
     String startWd, endWd;
 
     @Override
@@ -127,7 +127,9 @@ public class ReserveActivity extends AppCompatActivity implements View.OnClickLi
                 stintent.putExtra("endDay", endDay);
                 stintent.putExtra("endHour", endHour);
                 stintent.putExtra("endMin", endMin);
-                startActivity(stintent);
+                stintent.putExtra("startwday", startwday);
+                stintent.putExtra("endwday", endwday);
+                startActivityForResult(stintent, 4908);
                 break;
             case R.id.endDate:
             case R.id.endTime:
@@ -144,8 +146,20 @@ public class ReserveActivity extends AppCompatActivity implements View.OnClickLi
                 eintent.putExtra("endDay", endDay);
                 eintent.putExtra("endHour", endHour);
                 eintent.putExtra("endMin", endMin);
-                startActivity(eintent);
+                eintent.putExtra("startwday", startwday);
+                eintent.putExtra("endwday", endwday);
+                startActivityForResult(eintent, 4908);
                 break;
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if(resultCode == RESULT_OK) {
+            switch (requestCode) {
+                case 4908:
+                    break;
+            }
         }
     }
 
@@ -189,13 +203,13 @@ public class ReserveActivity extends AppCompatActivity implements View.OnClickLi
         startMonth = start.get(Calendar.MONTH) + 1;
         startDay = start.get(Calendar.DATE);
         startHour = start.get(Calendar.HOUR_OF_DAY);
-        int startwday = start.get(Calendar.DAY_OF_WEEK);
+        startwday = start.get(Calendar.DAY_OF_WEEK);
         startMin = (int)(Math.ceil((double)start.get(Calendar.MINUTE) / 10.0) * 10.0);
         endMonth = end.get(Calendar.MONTH) + 1;
         endDay = end.get(Calendar.DATE);
         endHour = end.get(Calendar.HOUR_OF_DAY);
         endMin = (int)(Math.ceil((double)end.get(Calendar.MINUTE) / 10.0) * 10.0);
-        int endwday = end.get(Calendar.DAY_OF_WEEK);
+        endwday = end.get(Calendar.DAY_OF_WEEK);
 
         if (startMin == 60) {
             startHour += 1;
