@@ -1,5 +1,6 @@
 package com.shoong.shoong.e;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
@@ -14,6 +15,8 @@ import android.widget.Button;
 import android.widget.NumberPicker;
 import android.widget.TextView;
 import android.widget.TimePicker;
+
+import com.tsengvn.typekit.TypekitContextWrapper;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
@@ -30,6 +33,17 @@ public class ReserveTimeSetActivity extends AppCompatActivity implements View.On
     private TextView bt_start, bt_end;
     static int startMonth, startDay, startHour, startMin, startwday, endMonth, endDay, endHour, endMin, endwday;
     static int sval = 0, eval = 0;
+    static Calendar start = Calendar.getInstance();
+    static Calendar end = Calendar.getInstance();
+    static TimePicker timePicker1, timePicker2;
+    static NumberPicker datePicker1, datePicker2;
+
+    @Override
+    protected void attachBaseContext (Context newBase) {
+
+        super.attachBaseContext(TypekitContextWrapper.wrap(newBase));
+
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +71,13 @@ public class ReserveTimeSetActivity extends AppCompatActivity implements View.On
         bt_start.setOnClickListener(this);
         bt_end.setOnClickListener(this);
         confirm.setOnClickListener(this);
+
+        start.set(Calendar.MONTH, startMonth-1);
+        start.set(Calendar.DAY_OF_MONTH, startDay);
+        start.set(Calendar.DAY_OF_WEEK, startwday);
+        end.set(Calendar.MONTH, endMonth-1);
+        end.set(Calendar.DAY_OF_MONTH, endDay);
+        end.set(Calendar.DAY_OF_WEEK, endwday);
 
         if (number == 1) {
             bt_start.setTextColor(Color.rgb(255, 255, 255));
@@ -88,7 +109,62 @@ public class ReserveTimeSetActivity extends AppCompatActivity implements View.On
                 callFragment(FRAGMENT2);
                 break;
             case R.id.pickerbtn:
+                try {
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                        startHour = timePicker1.getHour();
+                        startMin = timePicker1.getMinute() * 10;
+                    } else {
+                        startHour = timePicker1.getCurrentHour();
+                        startMin = timePicker1.getCurrentMinute();
+                    }
+                    sval = datePicker1.getValue();
+                } catch(Exception e) {
+                    e.printStackTrace();
+                }
 
+                try {
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                        endHour = timePicker2.getHour();
+                        endMin = timePicker2.getMinute() * 10;
+                    } else {
+                        endHour = timePicker2.getCurrentHour();
+                        endMin = timePicker2.getCurrentMinute();
+                    }
+                    eval = datePicker2.getValue();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+                Intent intent = new Intent();
+                //startMonth, startDay, startHour, startMin, startwday, endMonth, endDay, endHour, endMin, endwday
+                intent.putExtra("startHour", startHour);
+                intent.putExtra("startMin", startMin);
+                intent.putExtra("endHour", endHour);
+                intent.putExtra("endMin", endMin);
+
+                startDay = startDay + sval;
+                startwday = (startwday + sval) % 7 == 0 ? 7 : (startwday + sval) % 7;
+                if (startDay > start.getActualMaximum(Calendar.DATE)) {
+                    startDay = startDay - start.getActualMaximum(Calendar.DATE);
+                    startMonth = (startMonth + 1) % 13 == 0 ? 1 : startMonth + 1;
+                }
+
+                endDay = endDay + eval;
+                endwday = (endwday + eval) % 7 == 0 ? 7 : (endwday + eval) % 7;
+                if (endDay > end.getActualMaximum(Calendar.DATE)) {
+                    endDay = endDay - end.getActualMaximum(Calendar.DATE);
+                    endMonth = (endMonth + 1) % 13 == 0 ? 1 : endMonth + 1;
+                }
+
+                intent.putExtra("startDay", startDay);
+                intent.putExtra("startwday", startwday);
+                intent.putExtra("startMonth", startMonth);
+                intent.putExtra("endDay", endDay);
+                intent.putExtra("endwday", endwday);
+                intent.putExtra("endMonth", endMonth);
+
+                setResult(RESULT_OK, intent);
+                finish();
                 break;
         }
     }
@@ -117,7 +193,6 @@ public class ReserveTimeSetActivity extends AppCompatActivity implements View.On
         private final int TIME_PICKER_INTERVAL = 10;
         NumberPicker minutePicker;   //10분 단위 시간설정에 사용
         List<String> displayedValues;  //10분 단위 시간설정에 사용
-        Calendar start = Calendar.getInstance();
 
         public Fragment1() {
             //빈 생성자가 요구됨
@@ -126,26 +201,23 @@ public class ReserveTimeSetActivity extends AppCompatActivity implements View.On
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
             View view = inflater.inflate(R.layout.fragment_fragment1, container, false);
-            TimePicker timePicker = (TimePicker) view.findViewById(R.id.timePicker1);
-            NumberPicker datePicker = (NumberPicker) view.findViewById(R.id.datePicker1);
-            timePicker.setIs24HourView(true);
-            datePicker.setWrapSelectorWheel(false);
-            setTimePickerInterval(timePicker);
+            timePicker1 = (TimePicker) view.findViewById(R.id.timePicker1);
+            datePicker1 = (NumberPicker) view.findViewById(R.id.datePicker1);
+            timePicker1.setIs24HourView(true);
+            datePicker1.setWrapSelectorWheel(false);
+            setTimePickerInterval(timePicker1);
 
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                timePicker.setHour(startHour);
-                timePicker.setMinute(startMin / 10);
+                timePicker1.setHour(startHour);
+                timePicker1.setMinute(startMin / 10);
                 System.out.println(startMin);
             } else {
-                timePicker.setCurrentHour(startHour);
-                timePicker.setCurrentMinute(startMin);
+                timePicker1.setCurrentHour(startHour);
+                timePicker1.setCurrentMinute(startMin);
             }
 
             start.set(Calendar.HOUR, startHour);
             start.set(Calendar.MINUTE, startMin);
-            start.set(Calendar.MONTH, startMonth-1);
-            start.set(Calendar.DAY_OF_MONTH, startDay);
-            start.set(Calendar.DAY_OF_WEEK, startwday);
 
             NumberPicker.Formatter mFormatter = new NumberPicker.Formatter() {
                 @Override
@@ -173,15 +245,15 @@ public class ReserveTimeSetActivity extends AppCompatActivity implements View.On
                 }
             };
 
-            datePicker.setMinValue(0);
-            datePicker.setMaxValue(30);
-            datePicker.setValue(sval);
-            datePicker.setFormatter(mFormatter);
+            datePicker1.setMinValue(0);
+            datePicker1.setMaxValue(30);
+            datePicker1.setValue(sval);
+            datePicker1.setFormatter(mFormatter);
 
             try {
-                Method method = datePicker.getClass().getDeclaredMethod("changeValueByOne", boolean.class);
+                Method method = datePicker1.getClass().getDeclaredMethod("changeValueByOne", boolean.class);
                 method.setAccessible(true);
-                method.invoke(datePicker, true);
+                method.invoke(datePicker1, true);
             } catch (NoSuchMethodException e) {
                 e.printStackTrace();
             } catch (IllegalArgumentException e) {
@@ -197,17 +269,15 @@ public class ReserveTimeSetActivity extends AppCompatActivity implements View.On
 
         @Override
         public void onDestroyView() {
-            TimePicker timePicker = (TimePicker)getView().findViewById(R.id.timePicker1);
-            NumberPicker datePicker = (NumberPicker)getView().findViewById(R.id.datePicker1);
 
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                startHour = timePicker.getHour();
-                startMin = timePicker.getMinute() * 10;
+                startHour = timePicker1.getHour();
+                startMin = timePicker1.getMinute() * 10;
             } else {
-                startHour = timePicker.getCurrentHour();
-                startMin = timePicker.getCurrentMinute();
+                startHour = timePicker1.getCurrentHour();
+                startMin = timePicker1.getCurrentMinute();
             }
-            sval = datePicker.getValue();
+            sval = datePicker1.getValue();
 
             super.onDestroyView();
         }
@@ -240,7 +310,6 @@ public class ReserveTimeSetActivity extends AppCompatActivity implements View.On
         private final int TIME_PICKER_INTERVAL = 10;
         NumberPicker minutePicker;   //10분 단위 시간설정에 사용
         List<String> displayedValues;  //10분 단위 시간설정에 사용
-        Calendar end = Calendar.getInstance();
 
         public Fragment2() {
             //빈 생성자가 요구됨
@@ -249,26 +318,23 @@ public class ReserveTimeSetActivity extends AppCompatActivity implements View.On
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
             View view = inflater.inflate(R.layout.fragment_fragment2, container, false);
-            TimePicker timePicker = (TimePicker) view.findViewById(R.id.timePicker2);
-            NumberPicker datePicker = (NumberPicker) view.findViewById(R.id.datePicker2);
-            timePicker.setIs24HourView(true);
-            datePicker.setWrapSelectorWheel(false);
-            setTimePickerInterval(timePicker);
+            timePicker2 = (TimePicker) view.findViewById(R.id.timePicker2);
+            datePicker2 = (NumberPicker) view.findViewById(R.id.datePicker2);
+            timePicker2.setIs24HourView(true);
+            datePicker2.setWrapSelectorWheel(false);
+            setTimePickerInterval(timePicker2);
 
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                timePicker.setHour(endHour);
-                timePicker.setMinute(endMin / 10);
+                timePicker2.setHour(endHour);
+                timePicker2.setMinute(endMin / 10);
             } else {
-                timePicker.setCurrentHour(endHour);
-                timePicker.setCurrentMinute(endMin / 10);
+                timePicker2.setCurrentHour(endHour);
+                timePicker2.setCurrentMinute(endMin / 10);
             }
 
 
             end.set(Calendar.HOUR, endHour);
             end.set(Calendar.MINUTE, endMin);
-            end.set(Calendar.MONTH, endMonth-1);
-            end.set(Calendar.DAY_OF_MONTH, endDay);
-            end.set(Calendar.DAY_OF_WEEK, endwday);
 
             NumberPicker.Formatter mFormatter = new NumberPicker.Formatter() {
                 @Override
@@ -296,15 +362,15 @@ public class ReserveTimeSetActivity extends AppCompatActivity implements View.On
                 }
             };
 
-            datePicker.setMinValue(0);
-            datePicker.setMaxValue(30);
-            datePicker.setValue(eval);
-            datePicker.setFormatter(mFormatter);
+            datePicker2.setMinValue(0);
+            datePicker2.setMaxValue(30);
+            datePicker2.setValue(eval);
+            datePicker2.setFormatter(mFormatter);
 
             try {
-                Method method = datePicker.getClass().getDeclaredMethod("changeValueByOne", boolean.class);
+                Method method = datePicker2.getClass().getDeclaredMethod("changeValueByOne", boolean.class);
                 method.setAccessible(true);
-                method.invoke(datePicker, true);
+                method.invoke(datePicker2, true);
             } catch (NoSuchMethodException e) {
                 e.printStackTrace();
             } catch (IllegalArgumentException e) {
@@ -320,17 +386,14 @@ public class ReserveTimeSetActivity extends AppCompatActivity implements View.On
 
         @Override
         public void onDestroyView() {
-            TimePicker timePicker = (TimePicker)getView().findViewById(R.id.timePicker2);
-            NumberPicker datePicker = (NumberPicker)getView().findViewById(R.id.datePicker2);
-
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                endHour = timePicker.getHour();
-                endMin = timePicker.getMinute() * 10;
+                endHour = timePicker2.getHour();
+                endMin = timePicker2.getMinute() * 10;
             } else {
-                endHour = timePicker.getCurrentHour();
-                endMin = timePicker.getCurrentMinute();
+                endHour = timePicker2.getCurrentHour();
+                endMin = timePicker2.getCurrentMinute();
             }
-            eval = datePicker.getValue();
+            eval = datePicker2.getValue();
 
             super.onDestroyView();
         }

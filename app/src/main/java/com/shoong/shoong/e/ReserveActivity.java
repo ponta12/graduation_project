@@ -158,6 +158,7 @@ public class ReserveActivity extends AppCompatActivity implements View.OnClickLi
         if(resultCode == RESULT_OK) {
             switch (requestCode) {
                 case 4908:
+                    redataSetting(data);
                     break;
             }
         }
@@ -265,5 +266,64 @@ public class ReserveActivity extends AppCompatActivity implements View.OnClickLi
         enddate.setText(endMonth + "/" + endDay);
         endweekday.setText(endWd);
         total.setText("총 40분 이용");
+    }
+
+    private void redataSetting(Intent data) {
+        Calendar start = Calendar.getInstance();
+
+        startMonth = data.getIntExtra("startMonth", 1);
+        startDay = data.getIntExtra("startDay", 1);
+        startHour = data.getIntExtra("startHour", 0);
+        startMin = data.getIntExtra("startMin", 0);
+        startwday = data.getIntExtra("startwday", 1);
+        endMonth = data.getIntExtra("endMonth", 1);
+        endDay = data.getIntExtra("endDay", 1);
+        endHour = data.getIntExtra("endHour", 0);
+        endMin = data.getIntExtra("endMin", 0);
+        endwday = data.getIntExtra("endwday", 1);
+
+        start.set(Calendar.MONTH, startMonth);
+        start.set(Calendar.DAY_OF_MONTH, startDay);
+
+        switch (startwday){
+            case 1: startWd = "일요일"; break;
+            case 2: startWd = "월요일"; break;
+            case 3: startWd = "화요일"; break;
+            case 4: startWd = "수요일"; break;
+            case 5: startWd = "목요일"; break;
+            case 6: startWd = "금요일"; break;
+            case 7: startWd = "토요일"; break;
+        }
+        switch (endwday){
+            case 1: endWd = "일요일"; break;
+            case 2: endWd = "월요일"; break;
+            case 3: endWd = "화요일"; break;
+            case 4: endWd = "수요일"; break;
+            case 5: endWd = "목요일"; break;
+            case 6: endWd = "금요일"; break;
+            case 7: endWd = "토요일"; break;
+        }
+
+        int subDay, subHour, subMin;
+        if (endMonth == startMonth) subDay = endDay - startDay;
+        else subDay = endDay + start.getActualMaximum(Calendar.DATE) - startDay;
+        subHour = endHour - startHour;
+        subMin = endMin - startMin;
+        if (subHour < 0) {
+            subDay -= 1;
+            subHour = 24 + subHour;
+        }
+        if (subMin < 0) {
+            subHour -= 1;
+            subMin = 60 + subMin;
+        }
+
+        starttime.setText(startHour + "시 " + startMin + "분");
+        startdate.setText(startMonth + "/" + startDay);
+        startweekday.setText(startWd);
+        endtime.setText(endHour + "시 " + endMin + "분");
+        enddate.setText(endMonth + "/" + endDay);
+        endweekday.setText(endWd);
+        total.setText("총 " + subDay + "일 " + subHour + "시간 " + subMin + "분 이용");
     }
 }
