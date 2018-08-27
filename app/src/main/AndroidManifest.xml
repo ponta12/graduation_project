@@ -17,7 +17,7 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyBpYR1QtHTqLaNlDeRjZGBEkREV2tMnm9w" />
 
-        <activity android:name=".IntroActivity">
+        <activity android:name=".ReserveActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -29,7 +29,7 @@
         <activity android:name=".RegisterActivity"/>
         <activity android:name=".ReserveTimeSetActivity"/>
         <activity android:name=".ShareActivity"/>
-        <activity android:name=".ReserveActivity"/>
+        <activity android:name=".IntroActivity"/>
         <activity android:name=".SmartkeyActivity"/>
         <activity android:name=".MypageActivity"/>
     </application>

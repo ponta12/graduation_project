@@ -25,18 +25,4 @@
             android:layout_centerVertical="true"/>
     </RelativeLayout>
 
-    <Button
-        android:id="@+id/spickerbtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/spicker"
-        android:layout_marginTop="10dp"
-        android:text="확인"
-        android:layout_centerHorizontal="true"
-        android:background="@drawable/selector_button"
-        android:textColor="@drawable/selector_text"
-        android:textSize="13pt"
-        android:ems="8"/>
-
-
 </RelativeLayout>

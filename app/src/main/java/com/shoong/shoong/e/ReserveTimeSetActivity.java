@@ -10,11 +10,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.NumberPicker;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -26,7 +29,7 @@ public class ReserveTimeSetActivity extends AppCompatActivity implements View.On
 
     private TextView bt_start, bt_end;
     static int startMonth, startDay, startHour, startMin, startwday, endMonth, endDay, endHour, endMin, endwday;
-
+    static int sval = 0, eval = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +40,7 @@ public class ReserveTimeSetActivity extends AppCompatActivity implements View.On
 
         bt_start = (TextView)findViewById(R.id.startBtn);
         bt_end = (TextView)findViewById(R.id.endBtn);
+        Button confirm = (Button)findViewById(R.id.pickerbtn);
 
         int number = intent.getIntExtra("number", 1);
         startMonth = intent.getIntExtra("startMonth", 1);
@@ -52,6 +56,7 @@ public class ReserveTimeSetActivity extends AppCompatActivity implements View.On
 
         bt_start.setOnClickListener(this);
         bt_end.setOnClickListener(this);
+        confirm.setOnClickListener(this);
 
         if (number == 1) {
             bt_start.setTextColor(Color.rgb(255, 255, 255));
@@ -81,6 +86,9 @@ public class ReserveTimeSetActivity extends AppCompatActivity implements View.On
                 bt_start.setTextColor(Color.BLACK);
                 bt_start.setBackgroundColor(Color.WHITE);
                 callFragment(FRAGMENT2);
+                break;
+            case R.id.pickerbtn:
+
                 break;
         }
     }
@@ -167,9 +175,41 @@ public class ReserveTimeSetActivity extends AppCompatActivity implements View.On
 
             datePicker.setMinValue(0);
             datePicker.setMaxValue(30);
+            datePicker.setValue(sval);
             datePicker.setFormatter(mFormatter);
 
+            try {
+                Method method = datePicker.getClass().getDeclaredMethod("changeValueByOne", boolean.class);
+                method.setAccessible(true);
+                method.invoke(datePicker, true);
+            } catch (NoSuchMethodException e) {
+                e.printStackTrace();
+            } catch (IllegalArgumentException e) {
+                e.printStackTrace();
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            } catch (InvocationTargetException e) {
+                e.printStackTrace();
+            }
+
             return view;
+        }
+
+        @Override
+        public void onDestroyView() {
+            TimePicker timePicker = (TimePicker)getView().findViewById(R.id.timePicker1);
+            NumberPicker datePicker = (NumberPicker)getView().findViewById(R.id.datePicker1);
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                startHour = timePicker.getHour();
+                startMin = timePicker.getMinute() * 10;
+            } else {
+                startHour = timePicker.getCurrentHour();
+                startMin = timePicker.getCurrentMinute();
+            }
+            sval = datePicker.getValue();
+
+            super.onDestroyView();
         }
 
         private void setTimePickerInterval(TimePicker timePicker) {
@@ -218,10 +258,9 @@ public class ReserveTimeSetActivity extends AppCompatActivity implements View.On
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 timePicker.setHour(endHour);
                 timePicker.setMinute(endMin / 10);
-                System.out.println(endMin);
             } else {
                 timePicker.setCurrentHour(endHour);
-                timePicker.setCurrentMinute(endMin);
+                timePicker.setCurrentMinute(endMin / 10);
             }
 
 
@@ -259,20 +298,41 @@ public class ReserveTimeSetActivity extends AppCompatActivity implements View.On
 
             datePicker.setMinValue(0);
             datePicker.setMaxValue(30);
+            datePicker.setValue(eval);
             datePicker.setFormatter(mFormatter);
 
+            try {
+                Method method = datePicker.getClass().getDeclaredMethod("changeValueByOne", boolean.class);
+                method.setAccessible(true);
+                method.invoke(datePicker, true);
+            } catch (NoSuchMethodException e) {
+                e.printStackTrace();
+            } catch (IllegalArgumentException e) {
+                e.printStackTrace();
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            } catch (InvocationTargetException e) {
+                e.printStackTrace();
+            }
+
             return view;
-        }
-        @Override
-        public void onStop() {
-            super.onStop();
-            System.out.println("Stop 종료시간");
         }
 
         @Override
         public void onDestroyView() {
+            TimePicker timePicker = (TimePicker)getView().findViewById(R.id.timePicker2);
+            NumberPicker datePicker = (NumberPicker)getView().findViewById(R.id.datePicker2);
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                endHour = timePicker.getHour();
+                endMin = timePicker.getMinute() * 10;
+            } else {
+                endHour = timePicker.getCurrentHour();
+                endMin = timePicker.getCurrentMinute();
+            }
+            eval = datePicker.getValue();
+
             super.onDestroyView();
-            System.out.println("destroy 종료시간");
         }
 
         private void setTimePickerInterval(TimePicker timePicker) {
