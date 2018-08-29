@@ -148,6 +148,7 @@
             android:textSize="13pt"/>
 
         <EditText
+            android:id="@+id/domicile"
             android:layout_width="wrap_content"
             android:layout_height="45dp"
             android:ems="6"
@@ -159,9 +160,10 @@
             android:paddingLeft="5pt"/>
 
         <Button
+            android:id="@+id/searchbtn"
             android:layout_width="wrap_content"
             android:layout_height="45dp"
-            android:text="확인"
+            android:text="검색"
             android:background="@drawable/selector_button"
             android:textColor="@drawable/selector_text"
             android:textSize="10pt"

@@ -4,8 +4,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -22,7 +24,9 @@ public class ReserveActivity extends AppCompatActivity implements View.OnClickLi
 
     GoogleMap mMap;
     private Button homebtn, sharebtn, reservebtn, smartkeybtn, mypagebtn;
+    Button searchbtn;
     TextView starttime, startdate, startweekday, endtime, enddate, endweekday, total;
+    EditText domicile;
     private String userId, userName;
     private BackPressCloseHandler backPressCloseHandler;
     int startMonth, startDay, startHour, startMin, startwday, endMonth, endDay, endHour, endMin, endwday;
@@ -46,7 +50,6 @@ public class ReserveActivity extends AppCompatActivity implements View.OnClickLi
         userId = intent.getStringExtra("userId");
         userName = intent.getStringExtra("userName");
 
-
         homebtn = (Button)findViewById(R.id.homebtn3);
         sharebtn = (Button)findViewById(R.id.sharebtn3);
         reservebtn = (Button)findViewById(R.id.reservebtn3);
@@ -61,6 +64,10 @@ public class ReserveActivity extends AppCompatActivity implements View.OnClickLi
         endweekday = (TextView)findViewById(R.id.endWeekday);
         total = (TextView)findViewById(R.id.totalUseTime);
 
+        searchbtn = (Button)findViewById(R.id.searchbtn);
+        domicile = (EditText)findViewById(R.id.domicile);
+
+        searchbtn.setOnClickListener(this);
         homebtn.setOnClickListener(this);
         sharebtn.setOnClickListener(this);
         reservebtn.setOnClickListener(this);
@@ -149,6 +156,9 @@ public class ReserveActivity extends AppCompatActivity implements View.OnClickLi
                 eintent.putExtra("startwday", startwday);
                 eintent.putExtra("endwday", endwday);
                 startActivityForResult(eintent, 4908);
+                break;
+            case R.id.searchbtn:
+                domicileSearch();
                 break;
         }
     }
@@ -325,5 +335,17 @@ public class ReserveActivity extends AppCompatActivity implements View.OnClickLi
         enddate.setText(endMonth + "/" + endDay);
         endweekday.setText(endWd);
         total.setText("총 " + subDay + "일 " + subHour + "시간 " + subMin + "분 이용");
+    }
+
+    private void domicileSearch() {
+        final String domicileInput = domicile.getText().toString();
+
+        if (TextUtils.isEmpty(domicileInput)) {
+            domicile.setError("주소를 입력해주세요.");
+            domicile.requestFocus();
+            return;
+        }
+
+
     }
 }
