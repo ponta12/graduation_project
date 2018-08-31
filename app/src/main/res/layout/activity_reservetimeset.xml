@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:background="@drawable/main"
     android:orientation="vertical"
-    tools:context=".ReserveActivity">
+    tools:context=".ReserveTimeSetActivity">
 
     <LinearLayout
         android:layout_width="match_parent"

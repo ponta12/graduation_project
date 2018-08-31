@@ -32,6 +32,8 @@
         <activity android:name=".IntroActivity"/>
         <activity android:name=".SmartkeyActivity"/>
         <activity android:name=".MypageActivity"/>
+        <activity android:name=".SelectShareZoneActivity"/>
+        <activity android:name=".SelectBikeActivity"/>
     </application>
 
 </manifest>

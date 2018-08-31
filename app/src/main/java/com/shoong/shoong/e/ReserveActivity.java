@@ -1,26 +1,51 @@
 package com.shoong.shoong.e;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
+import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptor;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.tsengvn.typekit.TypekitContextWrapper;
 
-import java.util.Calendar;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
-public class ReserveActivity extends AppCompatActivity implements View.OnClickListener, OnMapReadyCallback {
+import java.util.Calendar;
+import java.util.HashMap;
+import java.util.Map;
+
+public class ReserveActivity extends AppCompatActivity implements View.OnClickListener, OnMapReadyCallback, GoogleMap.OnInfoWindowClickListener {
+
+    private static final String GET_DOMICILE_URL = "http://sobike.iptime.org:8080/p_search_zone.php";
+    private static final String BIKE_SEARCH_URL = "http://sobike.iptime.org:8080/p_search_bike.php";
+    private static final String RESERVE_BIKE_URL = "http://sobike.iptime.org:8080/p_reservation_bike.php";
+    private static final String MAP_SETTING_URL = "http://sobike.iptime.org:8080/p_view_point.php";
 
     GoogleMap mMap;
     private Button homebtn, sharebtn, reservebtn, smartkeybtn, mypagebtn;
@@ -29,6 +54,8 @@ public class ReserveActivity extends AppCompatActivity implements View.OnClickLi
     EditText domicile;
     private String userId, userName;
     private BackPressCloseHandler backPressCloseHandler;
+    private static String startTime;
+    private static String endTime;
     int startMonth, startDay, startHour, startMin, startwday, endMonth, endDay, endHour, endMin, endwday;
     String startWd, endWd;
 
@@ -49,6 +76,9 @@ public class ReserveActivity extends AppCompatActivity implements View.OnClickLi
         Intent intent = getIntent();
         userId = intent.getStringExtra("userId");
         userName = intent.getStringExtra("userName");
+
+        startTime = "2018-";
+        endTime = "2018-";
 
         homebtn = (Button)findViewById(R.id.homebtn3);
         sharebtn = (Button)findViewById(R.id.sharebtn3);
@@ -122,8 +152,6 @@ public class ReserveActivity extends AppCompatActivity implements View.OnClickLi
             case R.id.startTime:
             case R.id.startWeekday:
                 Intent stintent = new Intent(ReserveActivity.this, ReserveTimeSetActivity.class);
-                stintent.putExtra("userId", userId);
-                stintent.putExtra("userName", userName);
                 stintent.putExtra("number", 1);
                 //startMonth, startDay, startHour, startMin, endMonth, endDay, endHour, endMin;
                 stintent.putExtra("startMonth", startMonth);
@@ -142,8 +170,6 @@ public class ReserveActivity extends AppCompatActivity implements View.OnClickLi
             case R.id.endTime:
             case R.id.endWeekday:
                 Intent eintent = new Intent(ReserveActivity.this, ReserveTimeSetActivity.class);
-                eintent.putExtra("userId", userId);
-                eintent.putExtra("userName", userName);
                 eintent.putExtra("number", 2);
                 eintent.putExtra("startMonth", startMonth);
                 eintent.putExtra("startDay", startDay);
@@ -170,6 +196,12 @@ public class ReserveActivity extends AppCompatActivity implements View.OnClickLi
                 case 4908:
                     redataSetting(data);
                     break;
+                case 6653:
+                    bikeSearch(data.getIntExtra("id", 0), data.getStringExtra("name"));
+                    break;
+                case 1994:
+                    reserveconfirm(data.getIntExtra("zone_id", 0), data.getIntExtra("holder_id", 0), data.getStringExtra("zone_name"));
+                    break;
             }
         }
     }
@@ -183,28 +215,46 @@ public class ReserveActivity extends AppCompatActivity implements View.OnClickLi
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
 
+        StringRequest strReq = new StringRequest(Request.Method.POST, MAP_SETTING_URL, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String s) {
+                try {
+                    JSONArray array = new JSONArray(s);
+                    for (int i=0; i<array.length(); i++) {
+                        JSONObject item = array.getJSONObject(i);
+
+                        LatLng position = new LatLng(item.getDouble("lat"), item.getDouble("lng"));
+
+                        MarkerOptions markerOptions = new MarkerOptions()
+                                .icon(BitmapDescriptorFactory.defaultMarker(200f))
+                                .title(item.getString("zonename"))
+                                .snippet(item.getInt("zoneid") + "")
+                                .position(position);
+                        mMap.addMarker(markerOptions);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+                Log.e("ReserveActivity", "MAP_SETTING Error : " + volleyError.getMessage());
+            }
+        });
+        RequestQueue queue = Volley.newRequestQueue(ReserveActivity.this);
+        queue.add(strReq);
+
+        mMap.setOnInfoWindowClickListener(this);
+
         LatLng hakyeonsan = new LatLng(36.625194, 127.457302);
-        LatLng joongmoon = new LatLng(36.631541, 127.457071);
-        LatLng centerLibrary = new LatLng(36.628743, 127.457397);
-
-        MarkerOptions markerOptions1 = new MarkerOptions();
-        MarkerOptions markerOptions2 = new MarkerOptions();
-        MarkerOptions markerOptions3 = new MarkerOptions();
-        markerOptions1
-                .position(hakyeonsan)
-                .title("학연산");
-        markerOptions2
-                .position(joongmoon)
-                .title("중문");
-        markerOptions3
-                .position(centerLibrary)
-                .title("중앙도서관");
-
-        mMap.addMarker(markerOptions1);
-        mMap.addMarker(markerOptions2);
-        mMap.addMarker(markerOptions3);
 
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(hakyeonsan, 16));
+    }
+
+    @Override
+    public void onInfoWindowClick(Marker marker) {
+        bikeSearch(Integer.parseInt(marker.getSnippet()), marker.getTitle());
     }
 
     private void dateSetting() {
@@ -346,6 +396,208 @@ public class ReserveActivity extends AppCompatActivity implements View.OnClickLi
             return;
         }
 
+        StringRequest strReq = new StringRequest(Request.Method.POST, GET_DOMICILE_URL, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String s) {
+                try {
+                    JSONArray jsonResponse = new JSONArray(s);
+                    if (jsonResponse.length() != 0) {
+                        Intent intent = new Intent(ReserveActivity.this, SelectShareZoneActivity.class);
+                        intent.putExtra("jsonResponse", jsonResponse.toString());
+                        startActivityForResult(intent, 6653);
+                    } else {
+                        AlertDialog.Builder builder = new AlertDialog.Builder(ReserveActivity.this);
+                        builder.setMessage("검색하신 주소에 대여존이 없습니다.")
+                                .setNegativeButton("다시 시도", null)
+                                .create()
+                                .show();
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+                Log.e("ReserveActivity", "GET_DOMICILE Error : " + volleyError.getMessage());
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("text", domicileInput);
+                return params;
+            }
+        };
+        RequestQueue queue = Volley.newRequestQueue(ReserveActivity.this);
+        queue.add(strReq);
+    }
 
+    private void bikeSearch(final int zone_id, final String zone_name) {
+        if (startMonth < 10) startTime = startTime + "0" + startMonth  + "-";
+        else startTime = startTime + startMonth  + "-";
+        if (endMonth < 10) endTime = endTime + "0" + endMonth  + "-";
+        else endTime = endTime + endMonth  + "-";
+        if (startDay < 10) startTime = startTime + "0" + startDay + " ";
+        else startTime = startTime + startDay + " ";
+        if (endDay < 10) endTime = endTime + "0" + endDay + " ";
+        else endTime = endTime + endDay + " ";
+        if (startHour < 10) startTime = startTime + "0" + startHour + ":";
+        else startTime = startTime + startHour + ":";
+        if (endHour < 10) endTime = endTime + "0" + endHour + ":";
+        else endTime = endTime + endHour + ":";
+        if (startMin < 10) startTime = startTime + "0" + startMin + ":";
+        else startTime = startTime + startMin + ":";
+        if (endMin < 10) endTime = endTime + "0" + endMin + ":";
+        else endTime = endTime + endMin + ":";
+        startTime = startTime + "00";
+        endTime = endTime + "00";
+
+        final String mstartTime = startTime;
+        final String mendTime = endTime;
+
+        StringRequest strReq = new StringRequest(Request.Method.POST, BIKE_SEARCH_URL, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String s) {
+                try {
+                    JSONArray jsonResponse = new JSONArray(s);
+                    if (jsonResponse.length() != 0) {
+                        Intent intent = new Intent(ReserveActivity.this, SelectBikeActivity.class);
+                        intent.putExtra("jsonResponse", jsonResponse.toString());
+                        intent.putExtra("zonename", zone_name);
+                        startActivityForResult(intent, 1994);
+                    } else {
+                        AlertDialog.Builder builder = new AlertDialog.Builder(ReserveActivity.this);
+                        builder.setMessage("해당 시간, 해당 대여존에 자전거가 없습니다.")
+                                .setNegativeButton("다시 시도", null)
+                                .create()
+                                .show();
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+                Log.e("ReserveActivity", "BIKE_SEARCH Error : " + volleyError.getMessage());
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("zoneid", zone_id+"");
+                params.put("start", mstartTime);
+                params.put("end", mendTime);
+
+                return params;
+            }
+        };
+        RequestQueue queue = Volley.newRequestQueue(ReserveActivity.this);
+        queue.add(strReq);
+    }
+
+    private void reserveconfirm(final int zone_id, final int holder_id, final String zone_name) {
+        final String mstartTime = startTime;
+        final String mendTime = endTime;
+        AlertDialog.Builder mbuilder = new AlertDialog.Builder(ReserveActivity.this);
+        mbuilder.setMessage("시작 시간 : " + mstartTime + "\n" +
+        "종료 시간 : " + mendTime + "\n" +
+        "대여존 이름 : " + zone_name + "\n" +
+        "거치대 번호 : " + holder_id + "\n" +
+        "예약하시겠습니까?")
+                .setNegativeButton("취소", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        startTime = "2018-";
+                        endTime = "2018-";
+                        return;
+                    }
+                })
+                .setPositiveButton("확인", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        StringRequest strReq = new StringRequest(Request.Method.POST, RESERVE_BIKE_URL, new Response.Listener<String>() {
+                            @Override
+                            public void onResponse(String s) {
+                                try {
+                                    JSONObject jsonResponse = new JSONObject(s);
+                                    boolean success = jsonResponse.getBoolean("success");
+                                    if (success) {
+                                        final Intent intent = new Intent(ReserveActivity.this, MainActivity.class);
+                                        intent.putExtra("userId", userId);
+                                        intent.putExtra("userName", userName);
+                                        ReserveActivity.this.startActivity(intent);
+                                        ReserveActivity.this.finish();
+
+                                    } else {
+                                        AlertDialog.Builder builder = new AlertDialog.Builder(ReserveActivity.this);
+                                        builder.setMessage("예약에 실패했습니다.")
+                                                .setNegativeButton("다시 시도", new DialogInterface.OnClickListener() {
+                                                    @Override
+                                                    public void onClick(DialogInterface dialog, int which) {
+                                                        startTime = "2018-";
+                                                        endTime = "2018-";
+                                                        return;
+                                                    }
+                                                })
+                                                .setOnKeyListener(new DialogInterface.OnKeyListener() {
+                                                    @Override
+                                                    public boolean onKey(DialogInterface dialog, int keyCode, KeyEvent event) {
+                                                        if (keyCode == KeyEvent.KEYCODE_BACK) {
+                                                            startTime = "2018-";
+                                                            endTime = "2018-";
+                                                            finish();
+                                                            dialog.dismiss();
+                                                            return true;
+                                                        }
+                                                        return false;
+                                                    }
+                                                })
+                                                .create()
+                                                .show();
+                                    }
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        }, new Response.ErrorListener() {
+                            @Override
+                            public void onErrorResponse(VolleyError volleyError) {
+                                Log.e("ReserveActivity", "Reserve Error : " + volleyError.getMessage());
+                                startTime = "2018-";
+                                endTime = "2018-";
+                            }
+                        }) {
+                            @Override
+                            protected Map<String, String> getParams() {
+                                //Posting params to login url
+                                Map<String, String> params = new HashMap<String, String>();
+                                params.put("id", "1");
+                                params.put("zoneid", zone_id+"");
+                                params.put("holderid", holder_id+"");
+                                params.put("starttime", mstartTime);
+                                params.put("endtime", mendTime);
+                                return params;
+                            }
+                        };
+                        RequestQueue queue = Volley.newRequestQueue(ReserveActivity.this);
+                        queue.add(strReq);
+                    }
+                })
+                .setOnKeyListener(new DialogInterface.OnKeyListener() {
+                    @Override
+                    public boolean onKey(DialogInterface dialog, int keyCode, KeyEvent event) {
+                        if (keyCode == KeyEvent.KEYCODE_BACK) {
+                            startTime = "2018-";
+                            endTime = "2018-";
+                            dialog.dismiss();
+                            return true;
+                        }
+                        return false;
+                    }
+                })
+                .create()
+                .show();
     }
 }
