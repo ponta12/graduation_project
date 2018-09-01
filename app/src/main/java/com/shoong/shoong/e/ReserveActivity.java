@@ -203,6 +203,9 @@ public class ReserveActivity extends AppCompatActivity implements View.OnClickLi
                     reserveconfirm(data.getIntExtra("zone_id", 0), data.getIntExtra("holder_id", 0), data.getStringExtra("zone_name"));
                     break;
             }
+        } else {
+            startTime = "2018-";
+            endTime = "2018-";
         }
     }
 
@@ -434,6 +437,7 @@ public class ReserveActivity extends AppCompatActivity implements View.OnClickLi
     }
 
     private void bikeSearch(final int zone_id, final String zone_name) {
+
         if (startMonth < 10) startTime = startTime + "0" + startMonth  + "-";
         else startTime = startTime + startMonth  + "-";
         if (endMonth < 10) endTime = endTime + "0" + endMonth  + "-";
@@ -469,7 +473,26 @@ public class ReserveActivity extends AppCompatActivity implements View.OnClickLi
                     } else {
                         AlertDialog.Builder builder = new AlertDialog.Builder(ReserveActivity.this);
                         builder.setMessage("해당 시간, 해당 대여존에 자전거가 없습니다.")
-                                .setNegativeButton("다시 시도", null)
+                                .setNegativeButton("다시 시도", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        startTime = "2018-";
+                                        endTime = "2018-";
+                                        return;
+                                    }
+                                })
+                                .setOnKeyListener(new DialogInterface.OnKeyListener() {
+                                    @Override
+                                    public boolean onKey(DialogInterface dialog, int keyCode, KeyEvent event) {
+                                        if (keyCode == KeyEvent.KEYCODE_BACK) {
+                                            startTime = "2018-";
+                                            endTime = "2018-";
+                                            dialog.dismiss();
+                                            return true;
+                                        }
+                                        return false;
+                                    }
+                                })
                                 .create()
                                 .show();
                     }
@@ -547,7 +570,6 @@ public class ReserveActivity extends AppCompatActivity implements View.OnClickLi
                                                         if (keyCode == KeyEvent.KEYCODE_BACK) {
                                                             startTime = "2018-";
                                                             endTime = "2018-";
-                                                            finish();
                                                             dialog.dismiss();
                                                             return true;
                                                         }
