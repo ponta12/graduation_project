@@ -7,7 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.target.GlideDrawableImageViewTarget;
+import com.bumptech.glide.request.target.DrawableImageViewTarget;
 
 public class IntroActivity extends AppCompatActivity {
 
@@ -18,7 +18,7 @@ public class IntroActivity extends AppCompatActivity {
         setContentView(R.layout.activity_intro);
 
         ImageView img = (ImageView)findViewById(R.id.gif_image);
-        GlideDrawableImageViewTarget gifImage = new GlideDrawableImageViewTarget(img);
+        DrawableImageViewTarget gifImage = new DrawableImageViewTarget(img);
         Glide.with(this).load(R.drawable.intro_10mil).into(gifImage);
 
         Handler handler = new Handler();

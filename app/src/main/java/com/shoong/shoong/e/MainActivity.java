@@ -2,6 +2,7 @@ package com.shoong.shoong.e;
 
 import android.content.Context;
 import android.content.Intent;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -10,11 +11,19 @@ import android.widget.Button;
 import com.tsengvn.typekit.Typekit;
 import com.tsengvn.typekit.TypekitContextWrapper;
 
+import java.util.ArrayList;
+
+import cn.trinea.android.view.autoscrollviewpager.AutoScrollViewPager;
+
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     private Button homebtn, sharebtn, reservebtn, smartkeybtn, mypagebtn;
     private String userId, userName;
     private BackPressCloseHandler backPressCloseHandler;
+
+    AutoScrollViewPager autoViewPager;
+    AutoScrollAdapter scrollAdapter;
+    int count;
 
     @Override
     protected void attachBaseContext (Context newBase) {
@@ -46,6 +55,31 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         smartkeybtn.setOnClickListener(this);
         mypagebtn.setOnClickListener(this);
 
+        int[] data = {R.drawable.ex1, R.drawable.ex2, R.drawable.ex3, R.drawable.ex4, R.drawable.ex5};
+        count = data.length;
+
+        autoViewPager = (AutoScrollViewPager)findViewById(R.id.autoViewPager);
+        scrollAdapter = new AutoScrollAdapter(this, data);
+        autoViewPager.setAdapter(scrollAdapter); //Auto Viewpager에 Adapter 장착
+        autoViewPager.setCurrentItem(data.length);
+
+        autoViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float postionOffset, int positionOffsetPixels) {
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                if (position < count)
+                    autoViewPager.setCurrentItem(position + count, false);
+                else if (position >= count*2)
+                    autoViewPager.setCurrentItem(position - count, false);
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+            }
+        });
     }
 
     public void onClick(View v) {
@@ -86,6 +120,21 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onBackPressed() {
         backPressCloseHandler.onBackPressed();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        scrollAdapter.notifyDataSetChanged();
+        autoViewPager.setInterval(5000); // 페이지 넘어갈 시간 간격 설정
+        autoViewPager.startAutoScroll(); //Auto Scroll 시작
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        autoViewPager.stopAutoScroll();
     }
 
 }
