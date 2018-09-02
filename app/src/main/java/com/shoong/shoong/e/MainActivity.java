@@ -1,5 +1,6 @@
 package com.shoong.shoong.e;
 
+import android.app.ActionBar;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v4.view.ViewPager;
@@ -7,11 +8,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 
 import com.tsengvn.typekit.Typekit;
 import com.tsengvn.typekit.TypekitContextWrapper;
-
-import java.util.ArrayList;
 
 import cn.trinea.android.view.autoscrollviewpager.AutoScrollViewPager;
 
@@ -24,6 +25,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     AutoScrollViewPager autoViewPager;
     AutoScrollAdapter scrollAdapter;
     int count;
+    private int mPrevPostion;
+
+    private LinearLayout mPageMark;
 
     @Override
     protected void attachBaseContext (Context newBase) {
@@ -48,6 +52,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         reservebtn = (Button)findViewById(R.id.reservebtn1);
         smartkeybtn = (Button)findViewById(R.id.smartkeybtn1);
         mypagebtn = (Button)findViewById(R.id.mypagebtn1);
+
+        mPageMark = (LinearLayout)findViewById(R.id.page_mark);
 
         homebtn.setOnClickListener(this);
         sharebtn.setOnClickListener(this);
@@ -74,12 +80,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     autoViewPager.setCurrentItem(position + count, false);
                 else if (position >= count*2)
                     autoViewPager.setCurrentItem(position - count, false);
+                else {
+                    position -= count;
+                    mPageMark.getChildAt(mPrevPostion).setBackgroundResource(R.drawable.page_not);
+                    mPageMark.getChildAt(position).setBackgroundResource(R.drawable.page_select);
+                    mPrevPostion = position;
+                }
             }
 
             @Override
             public void onPageScrollStateChanged(int state) {
             }
         });
+
+        initPageMark();
     }
 
     public void onClick(View v) {
@@ -137,4 +151,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         autoViewPager.stopAutoScroll();
     }
 
+    private void initPageMark() {
+        for(int i=0; i<count; i++) {
+            ImageView iv = new ImageView(getApplicationContext());
+            iv.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
+
+            if (i==0) iv.setBackgroundResource(R.drawable.page_select);
+            else iv.setBackgroundResource(R.drawable.page_not);
+            mPageMark.addView(iv);
+        }
+        mPrevPostion = 0;
+    }
 }
