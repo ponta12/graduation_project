@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -29,11 +30,10 @@ public class SmartkeyActivity extends AppCompatActivity implements View.OnClickL
     private static final String RENT_URL = "http://sobike.iptime.org:8080/p_renting.php";
     private static final String RETURN_URL = "http://sobike.iptime.org:8080/p_return.php";
 
-
     private Button homebtn, sharebtn, reservebtn, smartkeybtn, mypagebtn;
     private String userId, userName;
     private BackPressCloseHandler backPressCloseHandler;
-    private Button rentbtn, returnbtn;
+    private ImageButton rentbtn, returnbtn;
 
     @Override
     protected void attachBaseContext (Context newBase) {
@@ -59,8 +59,8 @@ public class SmartkeyActivity extends AppCompatActivity implements View.OnClickL
         smartkeybtn = (Button)findViewById(R.id.smartkeybtn4);
         mypagebtn = (Button)findViewById(R.id.mypagebtn4);
 
-        rentbtn = (Button)findViewById(R.id.rentbtn);
-        returnbtn = (Button)findViewById(R.id.returnbtn);
+        rentbtn = (ImageButton) findViewById(R.id.rentbtn);
+        returnbtn = (ImageButton) findViewById(R.id.returnbtn);
 
         homebtn.setOnClickListener(this);
         sharebtn.setOnClickListener(this);
@@ -70,7 +70,6 @@ public class SmartkeyActivity extends AppCompatActivity implements View.OnClickL
 
         rentbtn.setOnClickListener(this);
         returnbtn.setOnClickListener(this);
-
     }
 
     public void onClick(View v) {

@@ -29,33 +29,19 @@
         android:layout_weight="10"
         android:orientation="horizontal">
 
-        <LinearLayout
+        <ImageButton
+            android:id="@+id/rentbtn"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:gravity="center">
+            android:background="@drawable/rent_button" />
 
-            <Button
-                android:id="@+id/rentbtn"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:text="대여"/>
-
-        </LinearLayout>
-
-        <LinearLayout
+        <ImageButton
+            android:id="@+id/returnbtn"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:gravity="center">
-
-            <Button
-                android:id="@+id/returnbtn"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:text="반납"/>
-
-        </LinearLayout>
+            android:background="@drawable/return_button"/>
 
     </LinearLayout>
 
