@@ -61,7 +61,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         smartkeybtn.setOnClickListener(this);
         mypagebtn.setOnClickListener(this);
 
-        int[] data = {R.drawable.ex1, R.drawable.ex2, R.drawable.ex3, R.drawable.ex4, R.drawable.ex5};
+        int[] data = { R.drawable.ex2, R.drawable.ex3, R.drawable.ex4 };
         count = data.length;
 
         autoViewPager = (AutoScrollViewPager)findViewById(R.id.autoViewPager);
