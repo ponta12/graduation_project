@@ -60,6 +60,13 @@
             android:paddingLeft="5pt"
             android:textColorHint="@color/colorBlack"/>
 
+        <CheckBox
+            android:id="@+id/auto_login"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="자동 로그인"
+            android:layout_marginTop="10dp"/>
+
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

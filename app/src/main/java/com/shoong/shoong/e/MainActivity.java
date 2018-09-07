@@ -141,7 +141,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onResume();
 
         scrollAdapter.notifyDataSetChanged();
-        autoViewPager.setInterval(5000); // 페이지 넘어갈 시간 간격 설정
+        autoViewPager.setInterval(3000); // 페이지 넘어갈 시간 간격 설정
         autoViewPager.startAutoScroll(); //Auto Scroll 시작
     }
 

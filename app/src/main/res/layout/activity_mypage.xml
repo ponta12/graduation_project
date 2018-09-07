@@ -26,7 +26,128 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="10">
+        android:layout_weight="10"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="6"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="13"
+                android:orientation="vertical"
+                android:layout_margin="4dp"
+                android:background="@drawable/layout_line">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="7"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        android:layout_weight="7">
+
+                        <TextView
+                            android:id="@+id/mp_name"
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="1"
+                            android:gravity="center_vertical"
+                            android:paddingLeft="30dp"
+                            android:textSize="10pt"/>
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="1"
+                            android:gravity="center_vertical"
+                            android:paddingLeft="30dp"
+                            android:text="환영합니다"
+                            android:textSize="10pt"/>
+
+                    </LinearLayout>
+
+                    <Button
+                        android:id="@+id/logoutBtn"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="3"
+                        android:background="@drawable/selector_button"
+                        android:textColor="@drawable/selector_text"
+                        android:textSize="10pt"
+                        android:layout_margin="8dp"
+                        android:text="로그아웃"/>
+
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/mp_id"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="3"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="30dp"
+                    android:textSize="10pt"/>
+
+                <TextView
+                    android:id="@+id/mp_phone"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="3"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="30dp"
+                    android:textSize="10pt"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="3"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/pwd_change"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/selector_button"
+                    android:textColor="@drawable/selector_text"
+                    android:textSize="10pt"
+                    android:layout_margin="4dp"
+                    android:text="비밀번호 변경"/>
+
+                <Button
+                    android:id="@+id/info_change"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/selector_button"
+                    android:textColor="@drawable/selector_text"
+                    android:textSize="10pt"
+                    android:layout_margin="4dp"
+                    android:text="개인정보 변경"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <ListView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="6"
+            android:padding="4dp"
+            android:background="@drawable/layout_line">
+
+        </ListView>
 
     </LinearLayout>
 

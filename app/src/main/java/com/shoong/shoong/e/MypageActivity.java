@@ -6,14 +6,20 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.tsengvn.typekit.TypekitContextWrapper;
 
 public class MypageActivity extends AppCompatActivity implements View.OnClickListener {
 
+    private static final String INIT_URL = "http://sobike.iptime.org:8080/p_view_userinfo.php";
+
     private Button homebtn, sharebtn, reservebtn, smartkeybtn, mypagebtn;
     private String userId, userName;
     private BackPressCloseHandler backPressCloseHandler;
+
+    TextView mp_id, mp_phone, mp_name;
+    Button pwd_change, info_change, logout;
 
     @Override
     protected void attachBaseContext (Context newBase) {
@@ -33,6 +39,16 @@ public class MypageActivity extends AppCompatActivity implements View.OnClickLis
         userId = intent.getStringExtra("userId");
         userName = intent.getStringExtra("userName");
 
+        mp_id = (TextView)findViewById(R.id.mp_id);
+        mp_id.setText("아이디 : " + userId);
+        mp_phone = (TextView)findViewById(R.id.mp_phone);
+        mp_name = (TextView)findViewById(R.id.mp_name);
+        mp_name.setText(userName + "님,");
+
+        pwd_change = (Button)findViewById(R.id.pwd_change);
+        info_change = (Button)findViewById(R.id.info_change);
+        logout = (Button)findViewById(R.id.logoutBtn);
+
         homebtn = (Button)findViewById(R.id.homebtn5);
         sharebtn = (Button)findViewById(R.id.sharebtn5);
         reservebtn = (Button)findViewById(R.id.reservebtn5);
@@ -44,6 +60,10 @@ public class MypageActivity extends AppCompatActivity implements View.OnClickLis
         reservebtn.setOnClickListener(this);
         smartkeybtn.setOnClickListener(this);
         mypagebtn.setOnClickListener(this);
+
+        pwd_change.setOnClickListener(this);
+        info_change.setOnClickListener(this);
+        logout.setOnClickListener(this);
 
     }
 
@@ -78,6 +98,13 @@ public class MypageActivity extends AppCompatActivity implements View.OnClickLis
                 finish();
                 break;
             case R.id.mypagebtn5:
+                break;
+            case R.id.logoutBtn:
+
+                break;
+            case R.id.pwd_change:
+                break;
+            case R.id.info_change:
                 break;
         }
     }
