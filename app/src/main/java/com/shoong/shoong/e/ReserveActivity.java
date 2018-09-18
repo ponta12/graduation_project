@@ -595,7 +595,7 @@ public class ReserveActivity extends AppCompatActivity implements View.OnClickLi
                             protected Map<String, String> getParams() {
                                 //Posting params to login url
                                 Map<String, String> params = new HashMap<String, String>();
-                                params.put("id", "1");
+                                params.put("id", userId);
                                 params.put("zoneid", zone_id+"");
                                 params.put("holderid", holder_id+"");
                                 params.put("starttime", mstartTime);

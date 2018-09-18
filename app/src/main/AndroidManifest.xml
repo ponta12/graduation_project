@@ -13,17 +13,22 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:largeHeap="true"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme"
+        android:networkSecurityConfig="@xml/network_security_config">
 
-        <!-- 디버그용 키
+        <uses-library android:name="org.apache.http.legacy" android:required="false"/>
+
+        <!-- 디버그용 키-->
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyBpYR1QtHTqLaNlDeRjZGBEkREV2tMnm9w" />
-        -->
 
+
+        <!-- 릴리스용 키
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyB8Cy9ikQbJUpVk5f2fMpGi4EyT1kKfbqE" />
+        -->
 
         <activity android:name=".IntroActivity">
             <intent-filter>

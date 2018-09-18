@@ -136,7 +136,6 @@ public class ReserveTimeSetActivity extends AppCompatActivity implements View.On
                 }
 
                 Intent intent = new Intent();
-                //startMonth, startDay, startHour, startMin, startwday, endMonth, endDay, endHour, endMin, endwday
                 intent.putExtra("startHour", startHour);
                 intent.putExtra("startMin", startMin);
                 intent.putExtra("endHour", endHour);
@@ -210,7 +209,6 @@ public class ReserveTimeSetActivity extends AppCompatActivity implements View.On
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 timePicker1.setHour(startHour);
                 timePicker1.setMinute(startMin / 10);
-                System.out.println(startMin);
             } else {
                 timePicker1.setCurrentHour(startHour);
                 timePicker1.setCurrentMinute(startMin);

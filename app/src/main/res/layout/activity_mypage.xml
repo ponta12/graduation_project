@@ -140,14 +140,70 @@
 
         </LinearLayout>
 
-        <ListView
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="6"
-            android:padding="4dp"
+            android:orientation="vertical"
+            android:layout_margin="4dp"
             android:background="@drawable/layout_line">
 
-        </ListView>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="2"
+                    android:text="대여존 이름"
+                    android:textSize="6pt"
+                    android:gravity="center"/>
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="2"
+                    android:text="거치대 번호"
+                    android:textSize="6pt"
+                    android:gravity="center"/>
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="2"
+                    android:text="시작 시간"
+                    android:textSize="6pt"
+                    android:gravity="center"/>
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="2"
+                    android:text="종료 시간"
+                    android:textSize="6pt"
+                    android:gravity="center"/>
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:text="X"
+                    android:textSize="6pt"
+                    android:gravity="center"/>
+
+            </LinearLayout>
+
+            <ListView
+                android:id="@+id/Listview_mypage"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="6"
+                android:padding="4dp"/>
+
+        </LinearLayout>
 
     </LinearLayout>
 
