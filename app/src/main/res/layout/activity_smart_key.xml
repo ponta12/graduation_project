@@ -79,22 +79,6 @@
             android:layout_weight="1">
 
             <Button
-                android:id="@+id/sharebtn4"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_gravity="center_vertical"
-                android:background="@color/colorWhite"
-                android:drawableTop="@drawable/ic_share"
-                android:text="share"
-                android:textColor="@color/lineGray" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1">
-
-            <Button
                 android:id="@+id/reservebtn4"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"

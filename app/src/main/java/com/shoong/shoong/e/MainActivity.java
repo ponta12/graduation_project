@@ -48,7 +48,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         userName = intent.getStringExtra("userName");
 
         homebtn = (Button)findViewById(R.id.homebtn1);
-        sharebtn = (Button)findViewById(R.id.sharebtn1);
         reservebtn = (Button)findViewById(R.id.reservebtn1);
         smartkeybtn = (Button)findViewById(R.id.smartkeybtn1);
         mypagebtn = (Button)findViewById(R.id.mypagebtn1);
@@ -56,7 +55,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mPageMark = (LinearLayout)findViewById(R.id.page_mark);
 
         homebtn.setOnClickListener(this);
-        sharebtn.setOnClickListener(this);
         reservebtn.setOnClickListener(this);
         smartkeybtn.setOnClickListener(this);
         mypagebtn.setOnClickListener(this);
@@ -99,13 +97,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.homebtn1:
-                break;
-            case R.id.sharebtn1:
-                Intent intent1 = new Intent(MainActivity.this, ShareActivity.class);
-                intent1.putExtra("userId", userId);
-                intent1.putExtra("userName", userName);
-                startActivity(intent1);
-                finish();
                 break;
             case R.id.reservebtn1:
                 Intent intent2 = new Intent(MainActivity.this, ReserveActivity.class);

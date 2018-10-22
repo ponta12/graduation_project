@@ -81,7 +81,6 @@ public class ReserveActivity extends AppCompatActivity implements View.OnClickLi
         endTime = "2018-";
 
         homebtn = (Button)findViewById(R.id.homebtn3);
-        sharebtn = (Button)findViewById(R.id.sharebtn3);
         reservebtn = (Button)findViewById(R.id.reservebtn3);
         smartkeybtn = (Button)findViewById(R.id.smartkeybtn3);
         mypagebtn = (Button)findViewById(R.id.mypagebtn3);
@@ -99,7 +98,6 @@ public class ReserveActivity extends AppCompatActivity implements View.OnClickLi
 
         searchbtn.setOnClickListener(this);
         homebtn.setOnClickListener(this);
-        sharebtn.setOnClickListener(this);
         reservebtn.setOnClickListener(this);
         smartkeybtn.setOnClickListener(this);
         mypagebtn.setOnClickListener(this);
@@ -123,13 +121,6 @@ public class ReserveActivity extends AppCompatActivity implements View.OnClickLi
                 intent1.putExtra("userId", userId);
                 intent1.putExtra("userName", userName);
                 startActivity(intent1);
-                finish();
-                break;
-            case R.id.sharebtn3:
-                Intent intent2 = new Intent(ReserveActivity.this, ShareActivity.class);
-                intent2.putExtra("userId", userId);
-                intent2.putExtra("userName", userName);
-                startActivity(intent2);
                 finish();
                 break;
             case R.id.reservebtn3:

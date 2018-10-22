@@ -18,17 +18,17 @@
 
         <uses-library android:name="org.apache.http.legacy" android:required="false"/>
 
-        <!-- 디버그용 키-->
+        <!-- 디버그용 키
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyBpYR1QtHTqLaNlDeRjZGBEkREV2tMnm9w" />
+        -->
 
-
-        <!-- 릴리스용 키
+        <!-- 릴리스용 키 -->
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyB8Cy9ikQbJUpVk5f2fMpGi4EyT1kKfbqE" />
-        -->
+
 
         <activity android:name=".IntroActivity">
             <intent-filter>
@@ -37,16 +37,18 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity android:name=".MainActivity"/>
         <activity android:name=".LoginActivity"/>
         <activity android:name=".RegisterActivity"/>
         <activity android:name=".ReserveTimeSetActivity"/>
-        <activity android:name=".ShareActivity"/>
         <activity android:name=".ReserveActivity"/>
         <activity android:name=".SmartkeyActivity"/>
         <activity android:name=".MypageActivity"/>
         <activity android:name=".SelectShareZoneActivity"/>
         <activity android:name=".SelectBikeActivity"/>
+        <activity android:name=".PwdChangeActivity"/>
+
     </application>
 
 </manifest>

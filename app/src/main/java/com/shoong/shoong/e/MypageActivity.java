@@ -80,7 +80,6 @@ public class MypageActivity extends AppCompatActivity implements View.OnClickLis
 
         //기존 메뉴 버튼
         homebtn = (Button)findViewById(R.id.homebtn5);
-        sharebtn = (Button)findViewById(R.id.sharebtn5);
         reservebtn = (Button)findViewById(R.id.reservebtn5);
         smartkeybtn = (Button)findViewById(R.id.smartkeybtn5);
         mypagebtn = (Button)findViewById(R.id.mypagebtn5);
@@ -92,7 +91,6 @@ public class MypageActivity extends AppCompatActivity implements View.OnClickLis
         editor = setting.edit();
 
         homebtn.setOnClickListener(this);
-        sharebtn.setOnClickListener(this);
         reservebtn.setOnClickListener(this);
         smartkeybtn.setOnClickListener(this);
         mypagebtn.setOnClickListener(this);
@@ -111,13 +109,6 @@ public class MypageActivity extends AppCompatActivity implements View.OnClickLis
                 intent1.putExtra("userId", userId);
                 intent1.putExtra("userName", userName);
                 startActivity(intent1);
-                finish();
-                break;
-            case R.id.sharebtn5:
-                Intent intent2 = new Intent(MypageActivity.this, ShareActivity.class);
-                intent2.putExtra("userId", userId);
-                intent2.putExtra("userName", userName);
-                startActivity(intent2);
                 finish();
                 break;
             case R.id.reservebtn5:
@@ -144,6 +135,10 @@ public class MypageActivity extends AppCompatActivity implements View.OnClickLis
                 finish();
                 break;
             case R.id.pwd_change:
+                Intent intent_pwd = new Intent(MypageActivity.this, PwdChangeActivity.class);
+                intent_pwd.putExtra("userId", userId);
+                intent_pwd.putExtra("userName", userName);
+                startActivity(intent_pwd);
                 break;
             case R.id.info_change:
                 break;
@@ -199,9 +194,7 @@ public class MypageActivity extends AppCompatActivity implements View.OnClickLis
                 litem.setZoneName(item.getString("zonename"));
                 litem.setHolderId(item.getString("holderid"));
                 litem.setStartTime(item.getString("starttime"));
-                System.out.println(item.getString("starttime"));
                 litem.setEndTime(item.getString("endtime"));
-                System.out.println(item.getString("endtime"));
                 items.add(litem);
             }
 
@@ -221,6 +214,7 @@ public class MypageActivity extends AppCompatActivity implements View.OnClickLis
             StringRequest strReq = new StringRequest(Request.Method.POST, CANCEL_URL, new Response.Listener<String>() {
                 @Override
                 public void onResponse(String s) {
+                    System.err.println(s);
                     try {
                         JSONObject returnObj = new JSONObject(s);
                         boolean success = returnObj.getBoolean("success");
@@ -231,6 +225,8 @@ public class MypageActivity extends AppCompatActivity implements View.OnClickLis
                                     .setPositiveButton("확인", new DialogInterface.OnClickListener() {
                                         @Override
                                         public void onClick(DialogInterface dialog, int which) {
+                                            intent.putExtra("userId", userId);
+                                            intent.putExtra("userName", userName);
                                             startActivity(intent);
                                             finish();
                                         }
@@ -262,6 +258,8 @@ public class MypageActivity extends AppCompatActivity implements View.OnClickLis
                     return params;
                 }
             };
+            RequestQueue queue = Volley.newRequestQueue(MypageActivity.this);
+            queue.add(strReq);
         } catch (JSONException e) {
             e.printStackTrace();
         }

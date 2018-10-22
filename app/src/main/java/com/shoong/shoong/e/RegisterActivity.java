@@ -85,8 +85,20 @@ public class RegisterActivity extends AppCompatActivity{
             return;
         }
 
+        if (id.length() < 4 || id.length() > 20) {
+            idText.setError("아이디 길이가 맞지 않습니다. 다시 확인해주세요.");
+            idText.requestFocus();
+            return;
+        }
+
         if (TextUtils.isEmpty(password)) {
             passwordText.setError("비밀번호를 입력해주세요.");
+            passwordText.requestFocus();
+            return;
+        }
+
+        if (password.length() < 8 || password.length() > 20) {
+            passwordText.setError("비밀번호 길이가 맞지 않습니다. 다시 확인해주세요.");
             passwordText.requestFocus();
             return;
         }

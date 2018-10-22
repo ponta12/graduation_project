@@ -54,7 +54,6 @@ public class SmartkeyActivity extends AppCompatActivity implements View.OnClickL
         userName = intent.getStringExtra("userName");
 
         homebtn = (Button)findViewById(R.id.homebtn4);
-        sharebtn = (Button)findViewById(R.id.sharebtn4);
         reservebtn = (Button)findViewById(R.id.reservebtn4);
         smartkeybtn = (Button)findViewById(R.id.smartkeybtn4);
         mypagebtn = (Button)findViewById(R.id.mypagebtn4);
@@ -63,7 +62,6 @@ public class SmartkeyActivity extends AppCompatActivity implements View.OnClickL
         returnbtn = (ImageButton) findViewById(R.id.returnbtn);
 
         homebtn.setOnClickListener(this);
-        sharebtn.setOnClickListener(this);
         reservebtn.setOnClickListener(this);
         smartkeybtn.setOnClickListener(this);
         mypagebtn.setOnClickListener(this);
@@ -79,13 +77,6 @@ public class SmartkeyActivity extends AppCompatActivity implements View.OnClickL
                 intent1.putExtra("userId", userId);
                 intent1.putExtra("userName", userName);
                 startActivity(intent1);
-                finish();
-                break;
-            case R.id.sharebtn4:
-                Intent intent2 = new Intent(SmartkeyActivity.this, ShareActivity.class);
-                intent2.putExtra("userId", userId);
-                intent2.putExtra("userName", userName);
-                startActivity(intent2);
                 finish();
                 break;
             case R.id.reservebtn4:
@@ -120,18 +111,22 @@ public class SmartkeyActivity extends AppCompatActivity implements View.OnClickL
 
     private void rentreturn(final int flag) {
         if (flag == 1) {
-            System.out.println("flag = 1");
             StringRequest strReq = new StringRequest(Request.Method.POST, RENT_URL, new Response.Listener<String>() {
                 @Override
                 public void onResponse(String s) {
                     try {
-                        System.out.println(s);
                         JSONObject jsonResponse = new JSONObject(s);
-                        boolean success = jsonResponse.getBoolean("success");
-                        if (success) {
+                        String success = jsonResponse.getString("success");
+                        if (success.equals("true")) {
                             AlertDialog.Builder builder = new AlertDialog.Builder(SmartkeyActivity.this);
                             builder.setMessage("대여!!!")
                                     .setPositiveButton("확인", null)
+                                    .create()
+                                    .show();
+                        } else if (success.equals("already")) {
+                            AlertDialog.Builder builder = new AlertDialog.Builder(SmartkeyActivity.this);
+                            builder.setMessage("이미 대여된 자전거 입니다.")
+                                    .setNegativeButton("확인", null)
                                     .create()
                                     .show();
                         } else {
@@ -154,7 +149,7 @@ public class SmartkeyActivity extends AppCompatActivity implements View.OnClickL
               @Override
               protected Map<String, String> getParams() {
                   Map<String, String> params = new HashMap<String, String>();
-                  params.put("id", "1");
+                  params.put("id", userId);
                   params.put("flag", flag+"");
                   return params;
               }
@@ -162,12 +157,10 @@ public class SmartkeyActivity extends AppCompatActivity implements View.OnClickL
             RequestQueue queue = Volley.newRequestQueue(SmartkeyActivity.this);
             queue.add(strReq);
         } else {
-            System.out.println("flag = 0");
             StringRequest strReq = new StringRequest(Request.Method.POST, RETURN_URL, new Response.Listener<String>() {
                 @Override
                 public void onResponse(String s) {
                     try {
-                        System.out.println(s);
                         JSONObject jsonResponse = new JSONObject(s);
                         boolean success = jsonResponse.getBoolean("success");
                         if (success) {
@@ -196,7 +189,7 @@ public class SmartkeyActivity extends AppCompatActivity implements View.OnClickL
                 @Override
                 protected Map<String, String> getParams() {
                     Map<String, String> params = new HashMap<String, String>();
-                    params.put("id", "1");
+                    params.put("id", userId);
                     params.put("flag", flag+"");
                     return params;
                 }

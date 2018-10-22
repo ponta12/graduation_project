@@ -11,6 +11,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 public class ListViewmypageAdapter extends ArrayAdapter implements View.OnClickListener {
+    //버튼 클릭 이벤트를 위한 Listener 인터페이스 정의
     public interface ListBtnClickListener {
         void onListBtnClick(int position);
     }
@@ -29,7 +30,6 @@ public class ListViewmypageAdapter extends ArrayAdapter implements View.OnClickL
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        final int pos = position;
         final Context context = parent.getContext();
 
         // 생성자로부터 저장된 resourceId(listview_btn_item)에 해당하는 Layout을 inflate하여 convertView 참조 획득.

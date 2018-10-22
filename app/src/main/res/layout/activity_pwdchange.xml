@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@drawable/main"
     android:orientation="vertical"
-    tools:context=".ShareActivity">
+    tools:context=".MainActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -17,16 +17,82 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="공유"
+            android:text="비밀번호 변경"
             android:textSize="15pt"
             android:textColor="#FFFFFF"/>
 
     </LinearLayout>
 
+
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="10">
+        android:layout_weight="10"
+        android:orientation="vertical"
+        android:gravity="center">
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="45dp"
+            android:inputType="textPassword"
+            android:background="#CDCDCD"
+            android:alpha="0.3"
+            android:ems="12"
+            android:id="@+id/now_pwd"
+            android:hint="현재 비밀번호"
+            android:paddingLeft="5pt"
+            android:textColorHint="#000000"
+            android:layout_marginTop="2dp"/>
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="45dp"
+            android:inputType="textPassword"
+            android:background="#CDCDCD"
+            android:alpha="0.3"
+            android:ems="12"
+            android:id="@+id/new_pwd"
+            android:hint="새 비밀번호(8~20자 이내)"
+            android:paddingLeft="5pt"
+            android:textColorHint="#000000"
+            android:layout_marginTop="2dp"/>
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="45dp"
+            android:inputType="textPassword"
+            android:background="#CDCDCD"
+            android:alpha="0.3"
+            android:ems="12"
+            android:id="@+id/new_pwd_confirm"
+            android:hint="새 비밀번호 확인"
+            android:paddingLeft="5pt"
+            android:textColorHint="#000000"
+            android:layout_marginTop="2dp"/>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="8"
+            android:id="@+id/change_confirm"
+            android:background="@drawable/selector_button"
+            android:textColor="@drawable/selector_text"
+            android:textSize="13pt"
+            android:layout_marginTop="20dp"
+            android:text="확인"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="45dp"
+            android:ems="8"
+            android:id="@+id/change_cancel"
+            android:gravity="center"
+            android:textSize="13pt"
+            android:background="@drawable/xml_border"
+            android:layout_marginTop="20dp"
+            android:text="취소"
+            android:textAppearance="@style/TextAppearance.AppCompat.Button"/>
 
     </LinearLayout>
 
@@ -48,7 +114,7 @@
             android:layout_weight="1">
 
             <Button
-                android:id="@+id/homebtn2"
+                android:id="@+id/homebtn5"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_gravity="center_vertical"
@@ -64,14 +130,14 @@
             android:layout_weight="1">
 
             <Button
-                android:id="@+id/sharebtn2"
+                android:id="@+id/sharebtn5"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_gravity="center_vertical"
                 android:background="@color/colorWhite"
-                android:drawableTop="@drawable/ic_share_selected"
+                android:drawableTop="@drawable/ic_share"
                 android:text="share"
-                android:textColor="@color/backBlue" />
+                android:textColor="@color/lineGray" />
         </LinearLayout>
 
         <LinearLayout
@@ -80,7 +146,7 @@
             android:layout_weight="1">
 
             <Button
-                android:id="@+id/reservebtn2"
+                android:id="@+id/reservebtn5"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_gravity="center_vertical"
@@ -96,7 +162,7 @@
             android:layout_weight="1">
 
             <Button
-                android:id="@+id/smartkeybtn2"
+                android:id="@+id/smartkeybtn5"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_gravity="center_vertical"
@@ -112,14 +178,14 @@
             android:layout_weight="1">
 
             <Button
-                android:id="@+id/mypagebtn2"
+                android:id="@+id/mypagebtn5"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_gravity="center_vertical"
                 android:background="@color/colorWhite"
-                android:drawableTop="@drawable/ic_mypage"
+                android:drawableTop="@drawable/ic_mypage_selected"
                 android:text="my page"
-                android:textColor="@color/lineGray" />
+                android:textColor="@color/backBlue" />
         </LinearLayout>
 
     </LinearLayout>
