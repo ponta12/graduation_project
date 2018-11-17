@@ -3,11 +3,13 @@ package com.shoong.shoong.e;
 import android.app.ActionBar;
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
@@ -18,7 +20,7 @@ import cn.trinea.android.view.autoscrollviewpager.AutoScrollViewPager;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
-    private Button homebtn, sharebtn, reservebtn, smartkeybtn, mypagebtn;
+    private Button homebtn, reservebtn, smartkeybtn, mypagebtn;
     private String userId, userName;
     private BackPressCloseHandler backPressCloseHandler;
 
@@ -52,14 +54,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         smartkeybtn = (Button)findViewById(R.id.smartkeybtn1);
         mypagebtn = (Button)findViewById(R.id.mypagebtn1);
 
+        ImageButton univbtn = (ImageButton)findViewById(R.id.univ_banner);
+        ImageButton softbtn = (ImageButton)findViewById(R.id.soft_banner);
+
         mPageMark = (LinearLayout)findViewById(R.id.page_mark);
 
         homebtn.setOnClickListener(this);
         reservebtn.setOnClickListener(this);
         smartkeybtn.setOnClickListener(this);
         mypagebtn.setOnClickListener(this);
+        univbtn.setOnClickListener(this);
+        softbtn.setOnClickListener(this);
 
-        int[] data = { R.drawable.ex2, R.drawable.ex3, R.drawable.ex4 };
+        int[] data = { R.drawable.bicycle1, R.drawable.bicycle2, R.drawable.bicycle3, R.drawable.bicycle4, R.drawable.bicycle5 };
         count = data.length;
 
         autoViewPager = (AutoScrollViewPager)findViewById(R.id.autoViewPager);
@@ -119,6 +126,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 startActivity(intent4);
                 finish();
                 break;
+            case R.id.univ_banner:
+                Intent univ = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.chungbuk.ac.kr/"));
+                startActivity(univ);
+            case R.id.soft_banner:
+                Intent soft = new Intent(Intent.ACTION_VIEW, Uri.parse("https://software.cbnu.ac.kr/"));
+                startActivity(soft);
         }
     }
 

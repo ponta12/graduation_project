@@ -48,7 +48,7 @@ public class ReserveActivity extends AppCompatActivity implements View.OnClickLi
     private static final String MAP_SETTING_URL = "http://sobike.iptime.org:8080/p_view_point.php";
 
     GoogleMap mMap;
-    private Button homebtn, sharebtn, reservebtn, smartkeybtn, mypagebtn;
+    private Button homebtn, reservebtn, smartkeybtn, mypagebtn;
     Button searchbtn;
     TextView starttime, startdate, startweekday, endtime, enddate, endweekday, total;
     EditText domicile;

@@ -34,7 +34,7 @@ public class MypageActivity extends AppCompatActivity implements View.OnClickLis
     private static final String INIT_URL = "http://sobike.iptime.org:8080/p_view_userinfo.php";
     private static final String CANCEL_URL = "http://sobike.iptime.org:8080/p_cancel_reservation.php";
 
-    private Button homebtn, sharebtn, reservebtn, smartkeybtn, mypagebtn;
+    private Button homebtn, reservebtn, smartkeybtn, mypagebtn;
     private String userId, userName, userPhone;
     private BackPressCloseHandler backPressCloseHandler;
 

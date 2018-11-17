@@ -24,10 +24,11 @@
             android:value="AIzaSyBpYR1QtHTqLaNlDeRjZGBEkREV2tMnm9w" />
         -->
 
-        <!-- 릴리스용 키 -->
+        <!-- 릴리스용 키-->
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyB8Cy9ikQbJUpVk5f2fMpGi4EyT1kKfbqE" />
+
 
 
         <activity android:name=".IntroActivity">

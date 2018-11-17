@@ -30,7 +30,7 @@ public class SmartkeyActivity extends AppCompatActivity implements View.OnClickL
     private static final String RENT_URL = "http://sobike.iptime.org:8080/p_renting.php";
     private static final String RETURN_URL = "http://sobike.iptime.org:8080/p_return.php";
 
-    private Button homebtn, sharebtn, reservebtn, smartkeybtn, mypagebtn;
+    private Button homebtn, reservebtn, smartkeybtn, mypagebtn;
     private String userId, userName;
     private BackPressCloseHandler backPressCloseHandler;
     private ImageButton rentbtn, returnbtn;
